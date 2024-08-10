@@ -9,6 +9,8 @@ import ProgramStyle from './themes/ProgramStyle.js';
 import Volunteer from './pages/Volunteering.jsx';
 import AddActivity from './pages/AddActivity.jsx';
 import EditActivity from './pages/EditActivity.jsx';
+import Reviews from './pages/Reviews.jsx';
+import Rewards from './pages/Rewards.jsx';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
               </Link>
               <Link to="/programs"><Typography>Programs</Typography></Link>
               <Link to="/volunteering"><Typography>Volunteering activities</Typography></Link>
+              <Link to="/reviews"><Typography>Reviews</Typography></Link>
+              <Link to="/rewards"><Typography>Rewards</Typography></Link>
             </Toolbar>
           </Container>
         </AppBar>
@@ -37,6 +41,8 @@ function App() {
             <Route path={"/volunteering"} element={<Volunteer />} />
             <Route path={"/addactivity"} element={<AddActivity />} />
             <Route path={"/editactivity/:id"} element={<EditActivity />} />
+            <Route path={"/reviews"} element={<Reviews />} />
+            <Route path={"/rewards"} element={<Rewards />} />
           </Routes>
         </Container>
       </ThemeProvider>
