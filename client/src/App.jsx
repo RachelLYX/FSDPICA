@@ -6,11 +6,12 @@ import AddProgram from './pages/AddProgram.jsx';
 import EditProgram from './pages/EditProgram.jsx';
 import { ThemeProvider } from '@mui/material/styles';
 import ProgramStyle from './themes/ProgramStyle.js';
-import Volunteer from './pages/Volunteering.jsx';
+import VolunteerPrograms from './pages/VolunteerPrograms.jsx';
 import AddActivity from './pages/AddActivity.jsx';
 import EditActivity from './pages/EditActivity.jsx';
 import Reviews from './pages/Reviews.jsx';
 import Rewards from './pages/Rewards.jsx';
+import Volunteering from './pages/Volunteering.jsx';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
                 </Typography>
               </Link>
               <Link to="/programs"><Typography>Programs</Typography></Link>
-              <Link to="/volunteering"><Typography>Volunteering activities</Typography></Link>
+              <Link to="/volunteeringprograms"><Typography>Volunteering</Typography></Link>
               <Link to="/reviews"><Typography>Reviews</Typography></Link>
               <Link to="/rewards"><Typography>Rewards</Typography></Link>
             </Toolbar>
@@ -38,11 +39,12 @@ function App() {
             <Route path={"/programs"} element={<Programs />} />
             <Route path={"/addprogram"} element={<AddProgram />} />
             <Route path={"/editprogram/:id"} element={<EditProgram />} />
-            <Route path={"/volunteering"} element={<Volunteer />} />
+            <Route path={"/volunteeringprograms"} element={<VolunteerPrograms />} />
             <Route path={"/addactivity"} element={<AddActivity />} />
             <Route path={"/editactivity/:id"} element={<EditActivity />} />
             <Route path={"/reviews"} element={<Reviews />} />
             <Route path={"/rewards"} element={<Rewards />} />
+            <Route path={"/volunteering"} element={<Volunteering />} />
           </Routes>
         </Container>
       </ThemeProvider>
