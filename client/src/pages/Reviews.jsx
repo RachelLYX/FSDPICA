@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Typography, TextField, Button, IconButton, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material'
+import { Box, Typography, TextField, Button, IconButton } from '@mui/material'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
+
+const initialReviews = [
+    {
+        comment: "I love saving the earth!",
+        author: "Brandi, 17, IT Student at Nanyang Polytechnic"
+    },
+    {
+        comment: "I should encourage my friends to join this activity",
+        author: "Darren, 18, Engineering Student at Nanyang Polytechnic"
+    },
+    {
+        comment: "This gives me a lesson about sustainability",
+        author: "Dustin, 18, Engineering Student at Nanyang Polytechnic"
+    }
+];
 
 const validationSchema = yup.object({
     author: yup.string().trim().required('Author is required'),
@@ -11,10 +26,8 @@ const validationSchema = yup.object({
 })
 
 const Reviews = () => {
-    const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState(initialReviews);
     const [editingIndex, setEditingIndex] = useState(null);
-    const [deleteIndex, setDeleteIndex] = useState(null);
-    const [openDialog, setOpenDialog] = useState(null);
 
     const formik = useFormik({
         initialValues: {
@@ -39,16 +52,9 @@ const Reviews = () => {
     });
 
     const handleDelete = (index) => {
-        setDeleteIndex(index);
-        setOpenDialog(true);
-    };
-
-    const confirmDelete = () => {
-        const updatedReviews = reviews.filter((_, i) => i !== deleteIndex);
+        const updatedReviews = reviews.filter((_, i) => i !== index);
         setReviews(updatedReviews);
-        setDeleteIndex(null);
-        setOpenDialog(false);
-    }
+    };
 
     const handleEdit = (index) => {
         const reviewToEdit = reviews[index];
@@ -114,23 +120,6 @@ const Reviews = () => {
                     {editingIndex !== null ? 'Update' : 'Send'}
                 </Button>
             </Box>
-
-            <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-                <DialogTitle>Delete Review</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to delete this review? This action cannot be undone.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setOpenDialog(false)} color='inherit' variant='contained'>
-                        Cancel
-                    </Button>
-                    <Button onClick={confirmDelete} color='error' variant='contained'>
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </Box>
     )
 }
