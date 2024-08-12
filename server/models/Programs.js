@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
     const Programs = sequelize.define("Programs", {
         Program: {
@@ -12,9 +12,8 @@ module.exports = (sequelize, DataTypes) => {
         Time: {
             type: DataTypes.TEXT,
             allowNull: false
-
         },
-        Date: {
+        Date : {
             type: DataTypes.TEXT,
             allowNull: false
         },
@@ -23,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     }, {
-        tableName: 'programs',
-        timestamps: true
+        tableName: 'programs'
     });
     return Programs;
 }

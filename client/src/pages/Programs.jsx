@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Box, CardContent, IconButton, Typography, Grid, Card, Input, Button } from '@mui/material';
+import { Box, CardContent, IconButton, Typography, Grid, Card, Input, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import http from '../http';
-import { AccessTime, Search, Clear, Edit } from '@mui/icons-material';
+import { AccessTime, Search, Clear, Edit, Delete } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import global from '../global';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 function Programs() {
   const [programList, setProgramList] = useState([]);
   const [search, setSearch] = useState('');
+  const [open, setOpen] = useState(false);
+  const [selectedProgram, setSelectedProgram] = useState(null);
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
@@ -45,11 +47,26 @@ function Programs() {
     getPrograms();
   };
 
-  useEffect(() => {
-    http.get('/programs').then((res) => {
-      console.log(res.data);
-    });
-  }, []);
+  const handleClickOpen = (program) => {
+    setSelectedProgram(program);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedProgram(null);
+  };
+
+  const deleteProgram = async () => {
+    try {
+      await http.delete(`/programs/${selectedProgram.id}`);
+      setProgramList(programList.filter(program => program.id !== selectedProgram.id));
+      handleClose();
+    } catch (error) {
+      console.error('Error deleting activity:', error);
+      handleClose();
+    }
+  }
 
   return (
     <Box>
@@ -81,7 +98,7 @@ function Programs() {
                 <Card sx={{ backgroundColor: '#006400', color: 'white' }}>
                   <CardContent>
                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }} color='text.secondary'>
-                      <Typography variant="h6" sx={{ mb: 1, color: 'white'}}>
+                      <Typography variant="h6" sx={{ mb: 1, color: 'white' }}>
                         {program.Program}
                       </Typography>
                       <AccessTime sx={{ mr: 1, color: 'white' }} />
@@ -89,10 +106,13 @@ function Programs() {
                         {dayjs(program.createdAt).format(global.datetimeFormat)}
                       </Typography>
                       <Link to={`/editprogram/${program.id}`}>
-                        <IconButton color='primary' sx={{ padding: '4px', color: 'white'}}>
+                        <IconButton color='primary' sx={{ padding: '4px', color: 'white' }}>
                           <Edit />
                         </IconButton>
                       </Link>
+                      <IconButton color="primary" sx={{ padding: '4px', color: 'white' }} onClick={() => handleClickOpen(program)}>
+                        <Delete />
+                      </IconButton>
                     </Box>
 
                     <Typography sx={{ whiteSpace: 'pre-wrap' }}>
@@ -114,6 +134,24 @@ function Programs() {
           })
         }
       </Grid>
+      <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>
+                Withdraw from program
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    Are you sure you want to withdraw from this program?
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button variant='contained' color='inherit' onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button variant='contained' color='error' onClick={deleteProgram}>
+                    Withdraw
+                </Button>
+            </DialogActions>
+        </Dialog>
     </Box>
   );
 };

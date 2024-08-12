@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Typography, Grid, Card, CardContent, Input, IconButton, Button } from '@mui/material'
+import { Box, Typography, Grid, Card, CardContent, Input, IconButton, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material'
 import http from '../http'
-import { AccessTime, Search, Clear, Edit } from '@mui/icons-material';
+import { AccessTime, Search, Clear, Edit, Delete } from '@mui/icons-material';
 import global from '../global';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 function Volunteering() {
   const [volunteerList, setVolunteerList] = useState([]);
   const [search, setSearch] = useState('');
+  const [open, setOpen] = useState(false);
+  const [selectedVolunteer, setSelectedVolunteer] = useState(null);
 
   const onSearchChange = (e) => {
     setSearch(e.target.value);
@@ -44,6 +46,27 @@ function Volunteering() {
   const onClickClear = () => {
     setSearch('');
     getVolunteer();
+  };
+
+  const handleClickOpen = (volunteer) => {
+    setSelectedVolunteer(volunteer);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSelectedVolunteer(null);
+  };
+
+  const deleteVolunteer = async () => {
+    try {
+        await http.delete(`/volunteering/${selectedVolunteer.id}`);
+        setVolunteerList(volunteerList.filter(volunteer => volunteer.id !== selectedVolunteer.id));
+        handleClose();
+    } catch (error) {
+        console.error('Error deleting activity:', error);
+        handleClose();
+    }
   };
 
   return (
@@ -84,6 +107,9 @@ function Volunteering() {
                                             <Edit />
                                         </IconButton>
                                     </Link>
+                                    <IconButton color="primary" sx={{ padding: '4px', color: 'white' }} onClick={() => handleClickOpen(volunteer)}>
+                                        <Delete />
+                                    </IconButton>
                                         <AccessTime sx={{ mr: 1, color: 'white'}} />
                                         <Typography sx={{ color: 'white' }}>
                                             {dayjs(volunteer.createdAt).format(global.datetimeFormat)}
@@ -105,6 +131,25 @@ function Volunteering() {
                 })
             }
         </Grid>
+
+        <Dialog open={open} onClose={handleClose}>
+            <DialogTitle>
+                Withdraw from program
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    Are you sure you want to withdraw from this program?
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button variant='contained' color='inherit' onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button variant='contained' color='error' onClick={deleteVolunteer}>
+                    Withdraw
+                </Button>
+            </DialogActions>
+        </Dialog>
     </Box>
   )
 }

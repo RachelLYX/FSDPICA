@@ -4,12 +4,26 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import http from '../http';
 
+const isFutureOrToday = (value) => {
+    const currentDate = new Date();
+    const inputDate = new Date(value);
+    return inputDate >= currentDate;
+}
+
+const isValidMonth = (value) => {
+    const month = parseInt(value.split('-')[1], 10);
+    return month >= 1 && month <= 12;
+};
+
 function AddProgram() {
     const validationSchema = yup.object({
         Program: yup.string().trim().min(10, 'Program must be at least 10 characters').required('Title is required'),
         Venue: yup.string().trim().min(10, 'Venue must be at least 10 characters').required('Venue is required'),
         Time: yup.string().trim().matches(/^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/, 'Invalid time format. Use hh:mm:ss (24-hour)').required('Time is required'),
-        Date: yup.string().trim().required('Date is required'),
+        Date: yup.string().trim().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid format. Please enter in yyyy-mm-dd format.')
+        .test('is-future-or-today', 'Date must be today or in the future', isFutureOrToday)
+        .test('is-valid-month', 'Invalid month. Please ensure month is between 01 and 12.', isValidMonth)
+        .required("Please enter the date"),
         Lunch: yup.string().trim().matches(/^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/, 'Invalid timing for lunch. Use hh:mm:ss (24-hour)').required('Lunch timing is required')
     });
 
@@ -24,6 +38,7 @@ function AddProgram() {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
+                console.log('Submitting values:', values);
                 await http.post('/programs', values); // Example HTTP POST request
                 alert('Program added successfully!');
             } catch (error) {

@@ -72,24 +72,8 @@ function EditActivity() {
         }
     });
 
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const deleteProgram = async () => {
-        try {
-            await http.delete(`volunteering/${id}`);
-            console.log('Program deleted');
-            navigate('/volunteering');
-        } catch(error) {
-            console.error('Error deleting program:', error);
-        }
+    const handleCancel= () => {
+        navigate('/volunteering');
     }
 
     return (
@@ -151,32 +135,13 @@ function EditActivity() {
                                 Update
                             </Button>
                             <Button variant="contained" sx={{ ml: 2 }} color="error"
-                                onClick={handleOpen}>
-                                Withdraw
+                                onClick={handleCancel}>
+                                Cancel
                             </Button>
                         </Box>
                     </Box>
                 )
             }
-
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>
-                    Withdraw from Program
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to withdraw from this program?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant='contained' color='inherit' onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button variant='contained' color='error' onClick={deleteProgram}>
-                        Withdraw
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </Box>
     )
 }

@@ -6,14 +6,29 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 
+const isFutureOrToday = (value) => {
+    const currentDate = new Date();
+    const inputDate = new Date(value);
+    return inputDate >= currentDate;
+}
+
+const isValidMonth = (value) => {
+    const month = parseInt(value.split('-')[1], 10);
+    return month >= 1 && month <= 12;
+};
+
 function EditProgram() {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const validationSchema = yup.object({
         Program: yup.string().trim().min(10, 'Program must be at least 10 characters').required('Title is required'),
         Venue: yup.string().trim().min(10, 'Venue must be at least 10 characters').required('Venue is required'),
         Time: yup.string().trim().matches(/^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/, 'Invalid time format. Use hh:mm:ss (24-hour)').required('Time is required'),
-        Date: yup.string().trim().required('Date is required'),
+        Date: yup.string().trim().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid format. Please enter in yyyy-mm-dd format.')
+        .test('is-future-or-today', 'Date must be today or in the future', isFutureOrToday)
+        .test('is-valid-month', 'Invalid month. Please ensure month is between 01 and 12.', isValidMonth)
+        .required("Please enter the date"),
         Lunch: yup.string().trim().matches(/^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/, 'Invalid timing for lunch. Use hh:mm:ss').required('Lunch timing is required')
     });
 
@@ -59,27 +74,11 @@ function EditProgram() {
         }
     });
 
-    const [open, setOpen] = useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const deleteProgram = () => {
-        http.delete(`/programs/${id}`)
-            .then((res) => {
-                console.log(res.data);
-                navigate('/programs');
-            })
-            .catch(error => {
-                console.error('Error deleting program:', error);
-                alert('Failed to delete program. Please try again.');
-            });
+    const handleCancel = () => {
+        navigate('/programs');
     }
+
+
 
     return (
         <Box>
@@ -155,33 +154,14 @@ function EditProgram() {
                             <Button variant="contained" type="submit">
                                 Update
                             </Button>
-                            <Button variant="contained" sx={{ ml: 2 }} color='error' onClick={handleOpen}>
-                                Delete
+                            <Button variant="contained" sx={{ ml: 2 }} color='error' onClick={handleCancel}>
+                                Cancel
                             </Button>
                         </Box>
                     </Box>
                 )
             }
-
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>
-                    Delete Program
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Are you sure you want to delete this program?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button variant='contained' color='inherit' onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button variant='contained' color='error' onClick={deleteProgram}>
-                        Delete
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </Box>
+            </Box>
     )
 }
 

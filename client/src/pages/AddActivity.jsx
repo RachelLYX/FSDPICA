@@ -18,7 +18,7 @@ const isValidMonth = (value) => {
 
 function AddActivity() {
   const validationSchema = yup.object({
-    Program: yup.string().trim().min(10, 'The program that you will attend must be at least 10 characters.').required('Program Name is required'),
+    Program: yup.string().trim().required('Program Name is required'),
     Name: yup.string().trim().required('Please enter your name'),
     Contact_Number: yup.number().integer().test('len', 'Contact number must have exactly 8 digits', val => val.toString().length === 8).required("Contact Number is required"),
     Date: yup.string().trim().matches(/^\d{4}-\d{2}-\d{2}$/, 'Invalid format. Please enter in yyyy-mm-dd format.')
@@ -49,7 +49,7 @@ function AddActivity() {
   return (
     <Box>
         <Typography variant="h5" sx={{ my: 2 }}>
-            Add Activity
+            Sign up for an Activity
         </Typography>
         <Box component="form" onSubmit={formik.handleSubmit}>
             <TextField

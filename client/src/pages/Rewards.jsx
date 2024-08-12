@@ -22,7 +22,7 @@ const Rewards = () => {
         ) : (
             <>
                 <Typography variant="h6" align="center" sx={{ mb: 3 }}>
-                    Congratulations, you have recieved 5 grab vouchers!
+                    Congratulations, you have recieved 5 $100 grab vouchers in your Grab account!
                 </Typography>
                 <Box>
                     <img src='./images/opened_gift_box.jpg' alt="opened gift box" style={{ width: '150px' }} />

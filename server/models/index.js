@@ -10,15 +10,26 @@ require('dotenv').config();
 
 // Create sequelize instance using config  
 let sequelize = new Sequelize(
-    process.env.DB_NAME, process.env.DB_USER, process.env.DB_PWD,
+    process.env.DB1_NAME, process.env.DB1_USER, process.env.DB1_PWD,
     {
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT,
+        host: process.env.DB1_HOST,
+        port: process.env.DB1_PORT,
         dialect: 'mysql',
         logging: false,
         timezone: '+08:00'
     }
 );
+
+let sequelize2 = new Sequelize(
+    process.env.DB2_NAME, process.env.DB2_USER, process.env.DB2_PWD,
+    {
+        host: process.env.DB2_HOST,
+        port: process.env.DB2_PORT,
+        dialect: 'mysql',
+        logging: false,
+        timezone: '+08:00'
+    }
+)
 
 fs
     .readdirSync(__dirname)
@@ -38,14 +49,33 @@ fs
         }
     });
 
+fs
+    .readdirSync(__dirname)
+    .filter(file => {
+        return (file.indexOf('.') !== 0) && (file !== basename) &&
+            (file.slice(-3) === '.js');
+    })
+    .forEach(file => {
+        try {
+            const model = require(path.join(__dirname, file))(sequelize2,
+                Sequelize.DataTypes);
+            db[model.name] = model;
+            console.log(`Model ${model.name} loaded successfully.`);
+        }
+        catch (error) {
+            console.error(`Error loading model ${file}:`, error);
+        }
+    });
+
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {
         db[modelName].associate(db);
     }
 });
 
-db.Program = require('./Programs')(sequelize, Sequelize.DataTypes);
 db.Program = require("./Volunteering")(sequelize, Sequelize.DataTypes);
+db.Program = require("./Programs")(sequelize2, Sequelize.DataTypes);
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
