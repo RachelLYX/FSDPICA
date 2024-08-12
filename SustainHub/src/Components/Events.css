@@ -1,0 +1,94 @@
+.events-page {
+    background: linear-gradient(rgba(11, 11, 11, 0.5), rgba(10, 10, 10, 0.5)), url('Images/employeems.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    color: white;
+  }
+  
+  .events-heading {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+  }
+  
+  .events-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .event-card {
+    background-color: rgba(3, 94, 11, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: transform 0.3s;
+    width: 350px;
+    margin: 10px;
+    color: white;
+  }
+  
+  .event-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .event-image-container {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .event-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .event-details {
+    padding: 20px;
+    text-align: left;
+  }
+  
+  .event-title {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .event-description,
+  .event-location,
+  .event-date,
+  .event-capacity {
+    margin: 5px 0;
+  }
+  
+  .apply-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #0c9b30;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+  
+  .apply-button:hover {
+    background-color: #005bb5;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+  
+  
+  
+  
