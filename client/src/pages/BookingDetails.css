@@ -1,0 +1,30 @@
+.booking-details {
+    background: linear-gradient(rgba(243, 244, 243, 0.5), rgba(255, 255, 255, 0.5)), url('Images/employeems.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    color: white;
+  }
+  
+  .details-container {
+    background-color: rgba(5, 78, 18, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    text-align: left;
+  }
+  
+  .details-container h3 {
+    text-align: center;
+  }
+  
+  .details-container p {
+    margin: 10px 0;
+  }
+  

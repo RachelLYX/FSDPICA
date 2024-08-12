@@ -1,0 +1,48 @@
+.confirmation-page {
+    background: linear-gradient(rgba(6, 82, 3, 0.5), rgba(10, 10, 10, 0.5)), url('Images/employeems.jpeg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+    color: white;
+  }
+  
+  .confirmation-message {
+    background-color: rgba(5, 90, 34, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(3, 90, 51, 0.3);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+  }
+  
+  .confirmation-message h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .confirmation-message p {
+    margin-bottom: 20px;
+  }
+  
+  .back-link {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #156804;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .back-link:hover {
+    background-color: #005bb5;
+  }
+  
