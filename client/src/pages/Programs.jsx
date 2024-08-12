@@ -136,11 +136,11 @@ function Programs() {
       </Grid>
       <Dialog open={open} onClose={handleClose}>
             <DialogTitle>
-                Withdraw from program
+                Delete program
             </DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Are you sure you want to withdraw from this program?
+                    Are you sure you want to delete this program?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -148,7 +148,7 @@ function Programs() {
                     Cancel
                 </Button>
                 <Button variant='contained' color='error' onClick={deleteProgram}>
-                    Withdraw
+                    Delete
                 </Button>
             </DialogActions>
         </Dialog>
