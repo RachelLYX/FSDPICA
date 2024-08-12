@@ -21,6 +21,7 @@ app.use(
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
+    credentials: true,
   })
 );
 
@@ -37,16 +38,37 @@ app.use("/programs", programRoute);
 const volunteeringRoute = require("./routes/volunteering");
 app.use("/volunteering", volunteeringRoute);
 
+// routes for chat messages
+const messageRoutes = require("./routes/chat.message.routes");
+app.use("/api/messages", messageRoutes);
+
+// routes for forum posts and threads
+const forumRoutes = require("./routes/forum_routes/forum.routes");
+app.use("/api/forums", forumRoutes);
+
+// const models = require("./models");
+// const db = models.db;
+// const db2 = models.db2;
+
+// // Synchronize both databases
+// Promise.all([
+//   db.sequelize.sync({ alter: true }),
+//   db2.sequelize.sync({ alter: true })
+// ])
+// .then(() => {
+//     let port = process.env.APP_PORT;
+//     app.listen(port, () => {
+//         console.log(`Server running on http://localhost:${port}`);
+//     });
+// })
+// .catch((err) => {
+//     console.error("Error synchronizing databases:", err);
+// });
+
 const db = require("./models");
-db.sequelize
-  .sync({ alter: true })
-  .sync({ alter: true })
-  .then(() => {
-    let port = process.env.APP_PORT;
-    app.listen(port, () => {
-      console.log(`Sever running on http://localhost:${port}`);
-    });
-  })
-  .catch((err) => {
-    console.log(err);
+db.sequelize.sync({ alter: true }).then(() => {
+  let port = process.env.APP_PORT;
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
   });
+});

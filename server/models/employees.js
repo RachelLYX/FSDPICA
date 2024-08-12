@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: 'admin',
         },
         created_at: {
-            type: DataTypes.TIMESTAMP,
+            type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
             allowNull: true,
         }

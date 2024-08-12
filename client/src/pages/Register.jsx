@@ -20,7 +20,7 @@ const validationSchema = yup.object({
   birth_date: yup.date().required("Birth date is required"),
   school: yup.string(),
   bio: yup.string(),
-  avatar: yup.mixed().required("Avatar is required"),
+  // avatar_url: yup.mixed(), //.required("Avatar is required") Errors with avatar, leave nullable
 });
 
 const Register = () => {
@@ -34,16 +34,17 @@ const Register = () => {
       birth_date: "",
       school: "",
       bio: "",
-      avatar: null,
+      avatar_url: null,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
         const formData = new FormData();
         for (const key in values) {
+          console.log(key, values[key]);
           formData.append(key, values[key]);
         }
-        const response = await axios.post("/auth/register", formData, {
+        const response = await axios.post("http://localhost:3001/auth/register", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -51,7 +52,7 @@ const Register = () => {
         alert("You have successfully signed up!");
         navigate("/login"); // Redirect to login page
       } catch (error) {
-        console.error("Registration error:", error);
+        console.error("Registration error:", error.response.data);
         alert("Registration failed: " + error.response.data.error);
       }
     },
@@ -133,11 +134,11 @@ const Register = () => {
           Upload Avatar
           <input
             type="file"
-            name="avatar"
+            name="avatar_url"
             accept="image/*"
             hidden
             onChange={(event) =>
-              formik.setFieldValue("avatar", event.currentTarget.files[0])
+              formik.setFieldValue("avatar_url", event.currentTarget.files[0])
             }
           />
         </Button>

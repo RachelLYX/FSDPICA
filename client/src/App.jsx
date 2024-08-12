@@ -17,24 +17,32 @@ import Login from "./pages/Login.jsx";
 import Profile from "./pages/Profile.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
+
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Dashboard from './Components/Dashboard';
-import Home from './Components/Home';
-import Employee from './Components/Employee';
-import Category from './Components/Category';
-import AddCategory from './Components/AddCategory';
-import AddEmployee from './Components/AddEmployee';
-import EditEmployee from './Components/EditEmployee';
-import Start from './Components/Start';
-import PrivateRoute from './Components/PrivateRoute';
-import Events from './Components/Events';
-import RegistrationSelection from './Components/RegistrationSelection';
-import IndividualRegistration from './Components/IndividualRegistration';
-import GroupRegistration from './Components/GroupRegistration';
-import BookingConfirmation from './Components/BookingConfirmation';
-import BookingDetails from './Components/BookingDetails';
+import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
+import Employee from './pages/Employee';
+import Category from './pages/Category';
+import AddCategory from './pages/AddCategory';
+import AddEmployee from './pages/AddEmployee';
+import EditEmployee from './pages/EditEmployee';
+import Start from './pages/Start';
+import PrivateRoute from './pages/PrivateRoute';
+import Events from './pages/Events';
+import RegistrationSelection from './pages/RegistrationSelection';
+import IndividualRegistration from './pages/IndividualRegistration';
+import GroupRegistration from './pages/GroupRegistration';
+import BookingConfirmation from './pages/BookingConfirmation';
+import BookingDetails from './pages/BookingDetails';
+
+import Chat from './pages/Chat';
+import ForumList from './forum_components/ForumList';
+import ForumDetail from './forum_components/ForumDetail';
+import CreateForum from './forum_components/CreateForum';
+
+const User = "Dave Smith";
 
 function App() {
   return (
@@ -60,6 +68,8 @@ function App() {
               <Link to="/volunteeringprograms">
                 <Typography>Volunteering</Typography>
               </Link>
+              <Link to="/communityChat"><Typography>Community Chat</Typography></Link>
+              <Link to="/communityThreads"><Typography>Community Threads</Typography></Link>
               <Link to="/reviews">
                 <Typography>Reviews</Typography>
               </Link>
@@ -111,6 +121,10 @@ function App() {
             <Route path='/register/:eventId/individual' element={<IndividualRegistration />} />
             <Route path='/register/:eventId/group' element={<GroupRegistration />} />
             <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+            <Route path={"/communityChat"} element={<Chat />} />
+            <Route path={"/communityThreads"} element={<ForumList />} />
+            <Route path={"/forum/:forumId"} element={<ForumDetail />} />
+            <Route path={"/create-forum"} element={<CreateForum />} />
           </Routes>
         </Container>
       </ThemeProvider>

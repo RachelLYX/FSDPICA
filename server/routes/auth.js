@@ -1,13 +1,16 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models"); // Import User model
 const authenticate = require("../middleware/authenticate"); // Import authenticate middleware
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 require("dotenv").config();
 
 const router = express.Router();
+
+const db = require("../models"); // Import User model
+
+const User = db.Users;
 
 // Use a more robust solution for production instead of simple object storage
 let otpStorage = {};
@@ -72,7 +75,7 @@ router.post("/register", async (req, res) => {
       birth_date,
       school,
       bio,
-      avatar: avatar ? avatar.data : null, // Assuming avatar data is stored as binary
+      avatar_url: avatar ? avatar.data : null, // Assuming avatar data is stored as binary
     });
     res.status(201).json({ message: "User registered successfully", user });
   } catch (error) {
