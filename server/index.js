@@ -1,34 +1,52 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+const express = require("express");
+const fileUpload = require("express-fileupload");
+const cors = require("cors");
+const session = require("express-session");
+require("dotenv").config();
 
 const app = express();
 app.use(express.json());
+app.use(fileUpload());
+app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({
-    origin: process.env.CLIENT_URL
-}));
+app.use(
+  session({
+    secret: "your_secret_key", // Use a secret key for session
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }, // Set to true if using HTTPS
+  })
+);
 
-
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  })
+);
 
 app.get("/", (req, res) => {
-    res.send("Let's save the earth!");
+  res.send("Let's save the earth!");
 });
 
-const programRoute = require('./routes/programs');
+const authRoute = require("./routes/auth");
+app.use("/auth", authRoute);
+
+const programRoute = require("./routes/programs");
 app.use("/programs", programRoute);
 
-const volunteeringRoute = require('./routes/volunteering');
+const volunteeringRoute = require("./routes/volunteering");
 app.use("/volunteering", volunteeringRoute);
 
-const db = require('./models');
-db.sequelize.sync({ alter: true })
-    .then(() => {
-        let port = process.env.APP_PORT;
-        app.listen(port, () => {
-            console.log(`Sever running on http://localhost:${port}`);
-        });
-    })
-    .catch((err) => {
-        console.log(err);
+const db = require("./models");
+db.sequelize
+  .sync({ alter: true })
+  .sync({ alter: true })
+  .then(() => {
+    let port = process.env.APP_PORT;
+    app.listen(port, () => {
+      console.log(`Sever running on http://localhost:${port}`);
     });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
