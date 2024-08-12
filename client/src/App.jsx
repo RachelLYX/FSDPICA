@@ -12,6 +12,12 @@ import EditActivity from "./pages/EditActivity.jsx";
 import Reviews from "./pages/Reviews.jsx";
 import Rewards from "./pages/Rewards.jsx";
 import Volunteering from "./pages/Volunteering.jsx";
+import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
+import Profile from "./pages/Profile.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
   return (
