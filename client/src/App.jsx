@@ -19,6 +19,23 @@ import HomePage from "./pages/HomePage.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Dashboard from './Components/Dashboard';
+import Home from './Components/Home';
+import Employee from './Components/Employee';
+import Category from './Components/Category';
+import AddCategory from './Components/AddCategory';
+import AddEmployee from './Components/AddEmployee';
+import EditEmployee from './Components/EditEmployee';
+import Start from './Components/Start';
+import PrivateRoute from './Components/PrivateRoute';
+import Events from './Components/Events';
+import RegistrationSelection from './Components/RegistrationSelection';
+import IndividualRegistration from './Components/IndividualRegistration';
+import GroupRegistration from './Components/GroupRegistration';
+import BookingConfirmation from './Components/BookingConfirmation';
+import BookingDetails from './Components/BookingDetails';
+
 function App() {
   return (
     <Router>
@@ -55,31 +72,45 @@ function App() {
 
         <Container>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Start />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            <Route path={"/"} element={<Programs />} />
-            <Route path={"/programs"} element={<Programs />} />
-            <Route path={"/addprogram"} element={<AddProgram />} />
-            <Route path={"/editprogram/:id"} element={<EditProgram />} />
-            <Route
-              path={"/volunteeringprograms"}
-              element={<VolunteerPrograms />}
-            />
-            <Route path={"/addactivity"} element={<AddActivity />} />
-            <Route path={"/editactivity/:id"} element={<EditActivity />} />
-            <Route path={"/reviews"} element={<Reviews />} />
-            <Route path={"/rewards"} element={<Rewards />} />
-            <Route path={"/volunteering"} element={<Volunteering />} />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/programs" element={<Programs />} />
+            <Route path="/addprogram" element={<AddProgram />} />
+            <Route path="/editprogram/:id" element={<EditProgram />} />
+            <Route path="/volunteeringprograms" element={<VolunteerPrograms />} />
+            <Route path="/addactivity" element={<AddActivity />} />
+            <Route path="/editactivity/:id" element={<EditActivity />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/rewards" element={<Rewards />} />
+            <Route path="/volunteering" element={<Volunteering />} />
+
+            <Route path='/adminlogin' element={<Login />} />
+            <Route path='/dashboard' element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }>
+              <Route path='' element={<Home />} />
+              <Route path='/dashboard/employee' element={<Employee />} />
+              <Route path='/dashboard/category' element={<Category />} />
+              <Route path='/dashboard/profile' element={<Profile />} />
+              <Route path='/dashboard/add_category' element={<AddCategory />} />
+              <Route path='/dashboard/add_employee' element={<AddEmployee />} />
+              <Route path='/dashboard/edit_employee/:id' element={<EditEmployee />} />
+              <Route path='/dashboard/booking_details/:id' element={<BookingDetails />} />
+            </Route>
+            <Route path='/events' element={<Events />} />
+            <Route path='/register/:eventId' element={<RegistrationSelection />} />
+            <Route path='/register/:eventId/individual' element={<IndividualRegistration />} />
+            <Route path='/register/:eventId/group' element={<GroupRegistration />} />
+            <Route path="/booking-confirmation" element={<BookingConfirmation />} />
           </Routes>
         </Container>
       </ThemeProvider>
@@ -88,3 +119,4 @@ function App() {
 }
 
 export default App;
+
