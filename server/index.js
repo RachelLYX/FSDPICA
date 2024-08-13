@@ -38,6 +38,13 @@ app.use("/programs", programRoute);
 const volunteeringRoute = require("./routes/volunteering");
 app.use("/volunteering", volunteeringRoute);
 
+const { adminRouter } = require("./routes/AdminRoute"); 
+app.use("/admin", adminRouter);
+
+const { EmployeeRouter } = require("./routes/EmployeeRoute"); 
+app.use("/employee", EmployeeRouter);
+
+
 // routes for chat messages
 const messageRoutes = require("./routes/chat.message.routes");
 app.use("/api/messages", messageRoutes);
